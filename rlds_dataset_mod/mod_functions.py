@@ -68,9 +68,9 @@ class PaddedResizeAndJpegEncode(TfdsModFunction):
                     isinstance(feat, tfds.features.Image) and "depth" not in key
                 )
                 if len(feat.shape) > 2:
-                    new_shape = (ResizeAndJpegEncode.HEIGHT, ResizeAndJpegEncode.WIDTH, feat.shape[2])
+                    new_shape = (PaddedResizeAndJpegEncode.HEIGHT, PaddedResizeAndJpegEncode.WIDTH, feat.shape[2])
                 else:
-                    new_shape = (ResizeAndJpegEncode.HEIGHT, ResizeAndJpegEncode.WIDTH)
+                    new_shape = (PaddedResizeAndJpegEncode.HEIGHT, PaddedResizeAndJpegEncode.WIDTH)
 
                 if isinstance(feat, tfds.features.Image):
                     return tfds.features.Image(
@@ -99,8 +99,8 @@ class PaddedResizeAndJpegEncode(TfdsModFunction):
                     step["observation"][key].shape[0] >= 64
                     or step["observation"][key].shape[1] >= 64
                 ):
-                    size = (ResizeAndJpegEncode.HEIGHT,
-                            ResizeAndJpegEncode.WIDTH)
+                    size = (PaddedResizeAndJpegEncode.HEIGHT,
+                            PaddedResizeAndJpegEncode.WIDTH)
                     if "depth" in key:
                         step["observation"][key] = tf.cast(
                             dl.utils.resize_depth_image(
@@ -111,8 +111,8 @@ class PaddedResizeAndJpegEncode(TfdsModFunction):
                     else:
                         image = tf.image.resize_with_pad(
                             step["observation"][key],
-                            target_height=ResizeAndJpegEncode.HEIGHT,
-                            target_width=ResizeAndJpegEncode.WIDTH,
+                            target_height=PaddedResizeAndJpegEncode.HEIGHT,
+                            target_width=PaddedResizeAndJpegEncode.WIDTH,
                         )
                         step["observation"][key] = tf.cast(tf.clip_by_value(tf.round(image), 0, 255), tf.uint8)
             return step

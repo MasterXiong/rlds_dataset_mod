@@ -13,9 +13,9 @@ Adjust workers to fit the available memory of your machine, the more workers + e
 The default values are tested with a server with ~120GB of RAM and 24 cores.
 '
 
-DOWNLOAD_DIR=<your_download_dir>
-CONVERSION_DIR=<temporary_dir_for_conversion>
-N_WORKERS=20                  # number of workers used for parallel conversion --> adjust based on available RAM
+DOWNLOAD_DIR="dataset/oxe_pad"
+CONVERSION_DIR="dataset/temp"
+N_WORKERS=40                  # number of workers used for parallel conversion --> adjust based on available RAM
 MAX_EPISODES_IN_MEMORY=200    # number of episodes converted in parallel --> adjust based on available RAM
 
 # increase limit on number of files opened in parallel to 20k --> conversion opens up to 1k temporary files
@@ -27,7 +27,7 @@ echo "!!! Instead download the bridge_dataset from here: https://rail.eecs.berke
 
 # format: [dataset_name, dataset_version, transforms]
 DATASET_TRANSFORMS=(
-    "fractal20220817_data 0.1.0 padded_padded_resize_and_jpeg_encode"
+    "fractal20220817_data 0.1.0 padded_resize_and_jpeg_encode"
     # "bridge 0.1.0 padded_resize_and_jpeg_encode"  
     "kuka 0.1.0 padded_resize_and_jpeg_encode,filter_success"
     "taco_play 0.1.0 padded_resize_and_jpeg_encode"
@@ -51,7 +51,7 @@ DATASET_TRANSFORMS=(
     "iamlab_cmu_pickup_insert_converted_externally_to_rlds 0.1.0 padded_resize_and_jpeg_encode"
     "utaustin_mutex 0.1.0 padded_resize_and_jpeg_encode,flip_wrist_image_channels,flip_image_channels"
     "berkeley_fanuc_manipulation 0.1.0 padded_resize_and_jpeg_encode,flip_wrist_image_channels,flip_image_channels"
-    "cmu_stretch 0.1.0 padded_resize_and_jpeg_encode"
+    # "cmu_stretch 0.1.0 padded_resize_and_jpeg_encode"
 )
 
 for tuple in "${DATASET_TRANSFORMS[@]}"; do
